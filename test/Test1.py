@@ -46,6 +46,17 @@ class Test1(unittest.TestCase):
         self.login.iniciar_sesion("aaa", "aaaa")
         #Validando mensaje de error si no se envian las credenciales
         self.login.existen_mensajes("//p[text()='Invalid credentials']")
+        self.login.validar_texto_alertas("//p[text()='Invalid credentials']", "Invalid credentials")
+        #captura de pantalla
+        self.f.capturas_pantalla("credencialesIncorrectas")
+        
+        #iniciando sesion sin enviar las credenciales
+        self.login.iniciar_sesion("", "")
+        #Validando mensaje de error si no se envian las credenciales
+        self.login.existen_mensajes("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/span")
+        self.login.validar_texto_alertas("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/span", "Required")
+        #captura de pantalla
+        self.f.capturas_pantalla("credencialesVacias")
         
     
     """
