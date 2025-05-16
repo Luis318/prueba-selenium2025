@@ -22,7 +22,10 @@ class Test1(unittest.TestCase):
     def test_inicio_sesion_exito(self):
         self.login.iniciar_sesion("Admin", "admin123")
         
+    
+    """
     #Test para cerrar sesion con exito
+    """
     def test_cerrar_sesion(self):
         self.login.iniciar_sesion("Admin", "admin123")
         #captura de pantalla
@@ -32,16 +35,34 @@ class Test1(unittest.TestCase):
         #captura de pantalla
         self.f.capturas_pantalla("CerrarSesion")
         
+        
+    """"
+    Se verifica que el mensaje de error se muestre
+        - al intentar iniciar sesion sin enviar las credenciales
+        - al enviar credenciales incorrectas
+    """
     def test_inicio_sesion_fallido(self):
-        pass
+        #inicaindo sesion con credenciales incorrectas
+        self.login.iniciar_sesion("aaa", "aaaa")
+        #Validando mensaje de error si no se envian las credenciales
+        self.login.existen_mensajes("//p[text()='Invalid credentials']")
+        
     
+    """
     #Test para crear un usuario con un empleado existente con exito
+    """
     def test_crear_usuario(self):
         self.registro.registrar_usuario("James  Butler", "jperez1", "password123")
+        
     
+    """
     #Test para crear un usuario con un empleado nuevo con exito
+    """
     def test_crear_empleado(self):
-        self.registro.crear_empleado()
+        self.registro.crear_empleado("Jorge","Montes","Lopez")
+        
+    def test_eliminar_empleado(self):
+        self.registro.eliminar_empleado()
 
     
     def tearDown(self):

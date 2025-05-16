@@ -1,5 +1,6 @@
 
 from pages.Funciones import Funciones
+from selenium.webdriver.common.by import By
 
 class Login():
     
@@ -22,3 +23,38 @@ class Login():
             print("Sesión cerrada con éxito")
         else:
             print("No se pudo cerrar la sesión")
+    
+    
+    """
+    Verifica si existe un mensaje de error, usando xpath
+    - xpath: xpath del mensaje de error
+    """
+    def existen_mensajes(self, xpath):
+        
+        if self.f.validar_elemento_xpath(xpath):
+            print("Existe un mensaje de error")
+            return True
+        
+        else: 
+            print("No se encontró el mensaje de error")
+            return False
+        
+    def validar_texto_alertas(self, xpath, texto_esperado):
+        
+        if self.f.validar_elemento_xpath(xpath):
+            mensaje = self.driver.find_element(By.XPATH, xpath)
+            mensaje_texto = mensaje.text
+            
+            if mensaje_texto == texto_esperado:
+                print("Los mesajes de alerta concuerdan")
+                print("Mensaje encontrado: " + mensaje_texto)
+                return True
+            
+            else:
+                print("Los mensajes de alerta no concuerdan")
+                print("Mensaje encontrado: " + mensaje_texto)
+                return False
+        else:
+            print("No se encontró el mensaje de error")
+            return False
+                
