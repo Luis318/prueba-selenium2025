@@ -1,0 +1,45 @@
+# Entorno virtual
+env*/
+venv*/
+ENV*/
+*.egg-info/
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Reportes
+*.html
+reportes/
+reports/
+*.xml
+
+# Archivos de logs
+*.log
+
+# Configuración local
+*.env
+.env.*
+
+# VSCode
+.vscode/
+.history/
+
+# Selenium / Webdriver
+*.crdownload
+chromedriver*
+geckodriver*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.bak
+*~
+
+# Carpetas específicas del proyecto (ajusta si las usas)
+test-output/
+output/
