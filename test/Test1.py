@@ -70,10 +70,12 @@ class Test1(unittest.TestCase):
     #Test para crear un usuario con un empleado nuevo con exito
     """
     def test_crear_empleado(self):
+        self.login.iniciar_sesion("Admin", "admin123")
         self.registro.crear_empleado("Jorge","Montes","Lopez")
         
     def test_eliminar_empleado(self):
-        self.registro.eliminar_empleado()
+        self.login.iniciar_sesion("Admin", "admin123")
+        self.registro.eliminar_empleado("0295", "delete")
 
     
     def tearDown(self):

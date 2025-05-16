@@ -86,22 +86,32 @@ class Registro():
             #verificar si el empleado fue creado
             self.f.validar_elemento_xpath("//*[@id='oxd-toaster_1']/div")
         
-    #Eliminar un empleado        
-    def eliminar_empleado(self, nombre_empleado=""):
-        self.login.iniciar_sesion("Admin", "admin123")
+            
+    
+    def eliminar_empleado(self, idEmpleado="",accion="edit"):
+        """
+        Hace clic en el boton de eliminar o editar del empleado
+        accion: edit o delete
         
-        #Revisa si el menu esta desplegado
-        menu = self.f.validar_elemento_xpath("//i[@class='oxd-icon bi-chevron-right']")
+        """
+        #Clic al boton de PIM
+        self.f.click_boton_xpath("//span[text()='PIM']", 1)
         
-        if menu:    
-            self.f.click_boton_xpath("//i[@class='oxd-icon bi-chevron-right']", 1)
+        accion_index = {'edit': 1, 'delete': 2}
+        if accion not in accion_index:
+            print("Accion no valida")
+            return False
+        
+        #xpath dinamico basdo en el id del empleado
+        xpath = f"//div[@role='row' and .//div[text()='{idEmpleado}']]//button[{accion_index[accion]}]"
+        
+        if self.f.validar_elemento_xpath(xpath):
+            button = self.f.click_boton_xpath(xpath)
+            if accion == "delete":
+                self.f.click_boton_xpath("//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-button-margin']")
         else:
-            #Clic al boton de admin
-            self.f.click_boton_xpath("//span[text()='PIM']", 1)
-            
-            #clic en eliminar 
-            self.f.clickTagName("//div[@class='oxd-table-card']", "Amelia ", "button", 1)
-            
+            print("No se encontró el elemento")
+            return False
             
             
             
