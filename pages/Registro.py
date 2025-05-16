@@ -56,7 +56,38 @@ class Registro():
             else:
                 print("No se pudo crear el usuario")
             
-    def crear_empleado(self):       
+    def crear_empleado(self, primer_nombre="", segundo_nombre="", apellido=""):       
+        self.login.iniciar_sesion("Admin", "admin123")
+        
+        #Revisa si el menu esta desplegado
+        menu = self.f.validar_elemento_xpath("//i[@class='oxd-icon bi-chevron-right']")
+        
+        if menu:    
+            self.f.click_boton_xpath("//i[@class='oxd-icon bi-chevron-right']", 1)
+        else:
+            #Clic al boton de PIM
+            self.f.click_boton_xpath("//span[text()='PIM']", 1)
+            
+            #clic al boton de agregar
+            self.f.click_boton_xpath("//button[@type='button' and contains(@class, 'oxd-button--secondary')]", 1)
+            
+            #Agregar First Name
+            self.f.text_xpath("//input[@placeholder='First Name']", primer_nombre)
+            
+            #Agregar Middle Name
+            self.f.text_xpath("//input[@placeholder='Middle Name']",segundo_nombre)
+            
+            #agregar Last Name
+            self.f.text_xpath("//input[@placeholder='Last Name']", apellido)
+            
+            #clic en Save
+            self.f.click_boton_xpath("//button[@type='submit']")
+            
+            #verificar si el empleado fue creado
+            self.f.validar_elemento_xpath("//*[@id='oxd-toaster_1']/div")
+        
+    #Eliminar un empleado        
+    def eliminar_empleado(self, nombre_empleado=""):
         self.login.iniciar_sesion("Admin", "admin123")
         
         #Revisa si el menu esta desplegado
@@ -68,17 +99,8 @@ class Registro():
             #Clic al boton de admin
             self.f.click_boton_xpath("//span[text()='PIM']", 1)
             
-            #clic al boton de agregar
-            self.f.click_boton_xpath("//button[@type='button' and contains(@class, 'oxd-button--secondary')]", 1)
-            
-            #Agregar First Name
-            self.f.text_xpath("//input[@placeholder='First Name']",1)
-            
-            #Agregar Middle Name
-            self.f.text_xpath("//input[@placeholder='Middle Name']",1)
-            
-            #agregar Last Name
-            self.f.text_xpath("//input[@placeholder='Last Name']")
+            #clic en eliminar 
+            self.f.clickTagName("//div[@class='oxd-table-card']", "Amelia ", "button", 1)
             
             
             
