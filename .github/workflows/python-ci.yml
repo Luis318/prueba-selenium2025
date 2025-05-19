@@ -29,13 +29,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget unzip xvfb libxss1 libappindicator3-1 libindicator7 fonts-liberation libnss3 lsb-release xdg-utils
 
-          # Instalar Chrome versión 123
+          # Instalar Chrome v123
           wget https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/linux64/chrome-linux64.zip
           unzip chrome-linux64.zip
           sudo mv chrome-linux64 /opt/chrome
+
+          # Eliminar enlace simbólico si ya existe
+          if [ -L /usr/bin/google-chrome ]; then
+            sudo rm /usr/bin/google-chrome
+          fi
+
+          # Crear nuevo enlace simbólico
           sudo ln -s /opt/chrome/chrome /usr/bin/google-chrome
 
-          # Instalar ChromeDriver para la misma versión
+          # Instalar ChromeDriver correspondiente
           wget https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/linux64/chromedriver-linux64.zip
           unzip chromedriver-linux64.zip
           sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
