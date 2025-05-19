@@ -24,35 +24,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Set up Chrome & WebDriver
+      - name: Set up Chrome v123 & ChromeDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
+          sudo apt-get install -y wget unzip xvfb libxss1 libappindicator1 libindicator7
 
-          # Obtener versión de Chrome
-          CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+\.\d+")
-          CHROME_MAIN_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1-3)
-          echo "🧭 Chrome version: $CHROME_VERSION"
-          echo "🔍 Trying to download ChromeDriver for: $CHROME_MAIN_VERSION"
+          # Descargar e instalar Chrome versión 123
+          wget https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/linux64/chrome-linux64.zip
+          unzip chrome-linux64.zip
+          sudo mv chrome-linux64 /opt/chrome
+          sudo ln -s /opt/chrome/chrome /usr/bin/google-chrome
 
-          DRIVER_URL="https://chromedriver.storage.googleapis.com/$CHROME_MAIN_VERSION/chromedriver_linux64.zip"
-
-          # Intentar descargar ChromeDriver exacto
-          if wget --spider $DRIVER_URL 2>/dev/null; then
-            wget -q $DRIVER_URL -O chromedriver.zip
-          else
-            echo "⚠️ ChromeDriver not found for version $CHROME_MAIN_VERSION. Trying fallback version..."
-            MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
-            COMPATIBLE_VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$MAJOR_VERSION)
-            echo "👉 Using ChromeDriver version: $COMPATIBLE_VERSION"
-            wget -q https://chromedriver.storage.googleapis.com/$COMPATIBLE_VERSION/chromedriver_linux64.zip -O chromedriver.zip
-          fi
-
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/local/bin/chromedriver
+          # Descargar ChromeDriver para la misma versión
+          wget https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.86/linux64/chromedriver-linux64.zip
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
+
+          # Confirmar versiones instaladas
+          google-chrome --version
+          chromedriver --version
 
       - name: Run tests
         run: |
