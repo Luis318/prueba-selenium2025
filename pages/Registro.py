@@ -53,8 +53,10 @@ class Registro():
             
             if self.f.validar_elemento_xpath("//*[@id='oxd-toaster_1']/div"):
                 print("Usuario creado con exito")
+                return True
             else:
                 print("No se pudo crear el usuario")
+                return False
             
     def crear_empleado(self, primer_nombre="", segundo_nombre="", apellido=""):       
         self.login.iniciar_sesion("Admin", "admin123")
