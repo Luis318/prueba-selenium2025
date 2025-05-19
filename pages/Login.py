@@ -13,7 +13,16 @@ class Login():
         self.f.text_xpath("//input[@name='username']", usuario)
         self.f.text_xpath("//input[@name='password']", password)
         self.f.click_boton_xpath("//button[@type='submit']")
+        
         print("Usuario ingresado: "+ str(usuario))
+        
+        if self.f.validar_elemento_xpath("//span[@class='oxd-userdropdown-tab']"):
+            print("Inicio de sesión exitoso")
+            return True
+        else:
+            print("Error al iniciar sesión")
+            return False    
+        
         
     def cerrar_sesion(self):
         self.f.click_boton_xpath("//span[@class='oxd-userdropdown-tab']")
@@ -21,8 +30,10 @@ class Login():
         
         if self.f.validar_elemento_xpath("//h5"):
             print("Sesión cerrada con éxito")
+            return True
         else:
             print("No se pudo cerrar la sesión")
+            return False
     
     
     """

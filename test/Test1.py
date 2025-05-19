@@ -29,11 +29,11 @@ class Test1(unittest.TestCase):
     #Test para cerrar sesion con exito
     """
     def test_cerrar_sesion(self):
-        self.login.iniciar_sesion("Admin", "admin123")
+        self.assertTrue(self.login.iniciar_sesion("Admin", "admin123"))
         #captura de pantalla
         self.f.capturas_pantalla("InicioSesion")
         
-        self.login.cerrar_sesion()
+        self.assertTrue(self.login.cerrar_sesion())
         #captura de pantalla
         self.f.capturas_pantalla("CerrarSesion")
         
