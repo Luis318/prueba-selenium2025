@@ -4,11 +4,13 @@ from selenium import webdriver
 from pages.Funciones import Funciones
 from pages.Login import Login
 from pages.Registro import Registro
+from pages.driver_factory import get_chorme_driver
 
 class Test1(unittest.TestCase):
     
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        #self.driver = webdriver.Chrome()
+        self.driver = get_chorme_driver(headless=True)
         self.f = Funciones(self.driver)
         self.login = Login(self.driver)
         self.registro = Registro(self.driver)
