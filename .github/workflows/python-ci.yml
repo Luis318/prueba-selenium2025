@@ -54,4 +54,4 @@ jobs:
 
       - name: Run tests
         run: |
-          xvfb-run python test/TestReportes.py
+          xvfb-run python -m test.TestReportes
